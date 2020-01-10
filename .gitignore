@@ -1,0 +1,4 @@
+*.o
+.DS_Store
+undelete_jpg
+*.jpg
