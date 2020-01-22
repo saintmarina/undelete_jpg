@@ -1,8 +1,7 @@
-#CFLAGS=-Wall -Wextra -Werror -O3
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -O0
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -O3
 
 ifeq ($(DEBUG),1)
-CFLAGS+=-DDEBUG -g
+CFLAGS+=-DDEBUG -g -O0
 endif
 
 %.o: %.c undelete_jpg.h status_bar.h
