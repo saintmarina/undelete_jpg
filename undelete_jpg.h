@@ -1,5 +1,5 @@
-#ifndef _UNDELETE_JPG_H_
-#define _UNDELETE_JPG_H_
+#ifndef UNDELETE_JPG_H
+#define UNDELETE_JPG_H
 
 #include <stddef.h>
 #include <sys/types.h>

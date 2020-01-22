@@ -1,5 +1,5 @@
-#ifndef _STATUS_BAR_H_
-#define _STATUS_BAR_H_
+#ifndef STATUS_BAR_H
+#define STATUS_BAR_H
 
 #include <stdbool.h>
 #include <sys/time.h>
