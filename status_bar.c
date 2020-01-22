@@ -52,7 +52,7 @@ static int fill_eta(char *buf, int64_t b_left, int b_per_second)
 
 static int fill_human_bytes(char *buf, size_t bytes, int unit)
 {
-  return sprintf(buf, "%.1f", (float)bytes/unit);
+  return sprintf(buf, "%.1f", (double)bytes/unit);
 }
 
 static int fill_human_byte_unit(char *buf, int unit)
