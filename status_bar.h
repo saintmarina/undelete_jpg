@@ -10,7 +10,7 @@
 #define ONE_MB (1024*1024)
 #define ONE_KB 1024
 
-#define USEC_PER_SEC 1000000L 
+#define USEC_PER_SEC 1000000L
 #define PBAR_REFRESH_USEC (1*USEC_PER_SEC/2)
 #define NO_SPEED -1
 
@@ -37,9 +37,9 @@ struct human_time_span {
 typedef int64_t date_usec_t;
 typedef int64_t span_usec_t;
 
-extern void maybe_update_status_bar(date_usec_t start_time,
+void maybe_update_status_bar(date_usec_t start_time,
                              size_t b_done, size_t b_total,
                              bool force);
 
-extern date_usec_t tv_to_usec(struct timeval *t);
+date_usec_t tv_to_usec(struct timeval *t);
 #endif

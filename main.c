@@ -1,5 +1,6 @@
 #include <err.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
@@ -10,7 +11,7 @@
 int main(int argc, char *argv[])
 {
   int fd;
-  u8 *fptr;
+  uint8_t *fptr;
   ssize_t size;
   int img_count;
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
   size = get_file_size(fd);
   if (size == -1)
     return 1;
-  
+
   fptr = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
   if (fptr == MAP_FAILED) {
     img_count = undelete_jpg_read(fd, size);
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
   }
 
   close(fd);
-  
+
   printf("\n%i images recovered\n", img_count);
 
   return 0;
