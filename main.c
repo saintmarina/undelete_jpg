@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
   uint8_t *fptr;
   ssize_t size;
   int img_count;
+  int rc = 0;
 
   if (argc != 2)
     errx(1, "Usage: ./undelete_jpg /dev/device");
@@ -21,25 +22,27 @@ int main(int argc, char *argv[])
   printf("Recovering from: %s\n", argv[1]);
 
   fd = open(argv[1], O_RDONLY);
-  if (fd == -1) {
-    warn("Error opening %s", argv[1]);
-    return 1;
-  }
+  if (fd) {
 
-  size = get_file_size(fd);
-  if (size == -1)
-    return 1;
+    size = get_file_size(fd);
+    if (size) {
 
-  fptr = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
-  if (fptr == MAP_FAILED) {
-    img_count = undelete_jpg_read(fd, size);
+      fptr = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
+      if (fptr == MAP_FAILED) {
+        img_count = undelete_jpg_read(fd, size);
+      } else {
+        img_count = undelete_jpg_mmap(fptr, size);
+      }
+      printf("\n%i images recovered\n", img_count);
+
+    } else {
+      rc = 1;
+    }
+    close(fd);
   } else {
-    img_count = undelete_jpg_mmap(fptr, size);
+    warn("Error opening %s", argv[1]);
+    rc = 1;
   }
 
-  close(fd);
-
-  printf("\n%i images recovered\n", img_count);
-
-  return 0;
+  return rc;
 }
