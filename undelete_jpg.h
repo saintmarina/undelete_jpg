@@ -2,6 +2,7 @@
 #define UNDELETE_JPG_H
 
 #include <stddef.h>
+#include <stdint.h>
 #include <sys/types.h>
 
 
@@ -24,13 +25,11 @@ enum {
   MARKER_EOI  /*End of Image*/
 };
 
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned long long int u64;
 
 /* opens and fills the addr and size */
-extern int undelete_jpg(u8 *offset, size_t size);
-extern ssize_t get_file_size(int fd);
-extern int undelete_jpg_read(int fd,  size_t size);
-extern int undelete_jpg_mmap(u8 *offset, size_t size);
+int undelete_jpg(uint8_t *offset, size_t size);
+ssize_t get_file_size(int fd);
+int undelete_jpg_read(int fd,  size_t size);
+int undelete_jpg_mmap(uint8_t *offset, size_t size);
+
 #endif

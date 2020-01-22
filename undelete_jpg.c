@@ -45,9 +45,9 @@ static int set_marker(struct marker *m, int type, int payload, size_t size)
   return m->len <= size;
 }
 
-static int _scan_marker(struct marker *m, u8 *p, size_t size)
+static int _scan_marker(struct marker *m, uint8_t *p, size_t size)
 {
-  u16 header;
+  uint16_t header;
   size_t var_len;
 
   if (size < 2)
@@ -84,9 +84,9 @@ static int _scan_marker(struct marker *m, u8 *p, size_t size)
   return 0;
 }
 
-static int scan_marker(struct marker *m, u8 *p, size_t size)
+static int scan_marker(struct marker *m, uint8_t *p, size_t size)
 {
-  static u8 *start=0;
+  static uint8_t *start=0;
   if (start == 0)
     start = p;
 
@@ -100,10 +100,10 @@ static int scan_marker(struct marker *m, u8 *p, size_t size)
   return ret;
 }
 
-static u8 *get_end_of_jpg(u8 *offset, size_t size)
+static uint8_t *get_end_of_jpg(uint8_t *offset, size_t size)
 {
   struct marker marker;
-  u8 * start = offset;
+  uint8_t *start = offset;
 
   /* Step 1: Make sure the SOI marker is present */
   if (!scan_marker(&marker, offset, size))
@@ -170,7 +170,7 @@ static int create_empty_jpg() {
   return fd;
 }
 
-static int recover_jpg(u8 *start, u8 *end) {
+static int recover_jpg(uint8_t *start, uint8_t *end) {
     int ret;
     int dst_fd;
     size_t num_bytes;
@@ -192,9 +192,9 @@ static int recover_jpg(u8 *start, u8 *end) {
     return 0;
 }
 
-static int maybe_recover_jpg(u8 *offset, size_t total_size)
+static int maybe_recover_jpg(uint8_t *offset, size_t total_size)
 {
-  u8 *end_of_jpg = get_end_of_jpg(offset, total_size);
+  uint8_t *end_of_jpg = get_end_of_jpg(offset, total_size);
   if (end_of_jpg == NULL)
     return 0;
   if (recover_jpg(offset, end_of_jpg) == -1)
@@ -204,9 +204,9 @@ static int maybe_recover_jpg(u8 *offset, size_t total_size)
 }
 
 
-static u8 *locate_jpg_header(u8 *buffer, size_t size)
+static uint8_t *locate_jpg_header(uint8_t *buffer, size_t size)
 {
-  u8 *ret = memchr(buffer+1, 0xd8, size-1);
+  uint8_t *ret = memchr(buffer+1, 0xd8, size-1);
   if (ret == NULL)
     return ret;
 
@@ -214,10 +214,10 @@ static u8 *locate_jpg_header(u8 *buffer, size_t size)
 }
 
 
-static int undelete_jpg_buf(u8 *offset, size_t size_scan,
+static int undelete_jpg_buf(uint8_t *offset, size_t size_scan,
                      size_t size_buf, bool show_status_bar)
 {
-  u8 *start = offset;
+  uint8_t *start = offset;
   size_t size_scan_orig = size_scan;
 
   struct timeval t;
@@ -250,7 +250,7 @@ static int undelete_jpg_buf(u8 *offset, size_t size_scan,
      */
 
     size_t n = MIN(size_scan, ONE_KB*10);
-    u8 *ret = locate_jpg_header(offset, n);
+    uint8_t *ret = locate_jpg_header(offset, n);
     if (ret != NULL) {
       int img = maybe_recover_jpg(ret, size_buf - (ret - offset));
       if (img == -1)
@@ -273,12 +273,12 @@ static int undelete_jpg_buf(u8 *offset, size_t size_scan,
   return img_count;
 }
 
-int undelete_jpg_mmap(u8 *offset, size_t size)
+int undelete_jpg_mmap(uint8_t *offset, size_t size)
 {
   return undelete_jpg_buf(offset, size, size, true);
 }
 
-ssize_t bread(int fd, u8 *buf, ssize_t size)
+ssize_t bread(int fd, uint8_t *buf, ssize_t size)
 {
   if (size == 0)
     return 0;
@@ -298,14 +298,14 @@ ssize_t bread(int fd, u8 *buf, ssize_t size)
 
 int undelete_jpg_read(int fd,  size_t size)
 {
-  u8 *buf = malloc(2*MAX_JPG);
+  uint8_t *buf = malloc(2*MAX_JPG);
   if (buf == NULL) {
     warn("Can't allocate memory");
     return -1;
   }
   // Both buf1 and buf2 are MAX_JPG len.
-  u8 *buf1 = buf;
-  u8 *buf2 = buf+MAX_JPG;
+  uint8_t *buf1 = buf;
+  uint8_t *buf2 = buf+MAX_JPG;
   ssize_t buf1_size, buf2_size;
 
   int img_count = 0;

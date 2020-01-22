@@ -1,5 +1,6 @@
 #include <err.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
@@ -10,7 +11,7 @@
 int main(int argc, char *argv[])
 {
   int fd;
-  u8 *fptr;
+  uint8_t *fptr;
   ssize_t size;
   int img_count;
 
