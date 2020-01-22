@@ -64,6 +64,9 @@ Example of running the program on linux:
 sudo ./undelete_jpg /dev/sdb1
 ```
 
+### Other projects
+[PhotoRec](https://www.cgsecurity.org/wiki/PhotoRec) is another opensource battle tested tool to recover all kinds of files, including JPGs.
+
 ## License
 
 This project is licensed under the MIT License.
