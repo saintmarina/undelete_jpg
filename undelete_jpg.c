@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -155,12 +156,12 @@ static uint8_t *get_end_of_jpg(uint8_t *offset, size_t size)
   return NULL;
 }
 
-static int create_empty_jpg() {
+static int create_empty_jpg(void) {
   static unsigned int img_num = 0;
-  char file_name[64];
+  char file_name[PATH_MAX];
   int fd;
 
-  sprintf(file_name, "%03u.jpg", img_num);
+  snprintf(file_name, sizeof(file_name), "%03u.jpg", img_num);
   fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
   if (fd < 0) {
       warn("Error opening output file");
