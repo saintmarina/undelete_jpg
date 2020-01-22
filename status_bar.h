@@ -10,7 +10,7 @@
 #define ONE_MB (1024*1024)
 #define ONE_KB 1024
 
-#define USEC_PER_SEC 1000000L 
+#define USEC_PER_SEC 1000000L
 #define PBAR_REFRESH_USEC (1*USEC_PER_SEC/2)
 #define NO_SPEED -1
 

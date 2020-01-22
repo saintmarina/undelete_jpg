@@ -50,18 +50,18 @@ static int _scan_marker(struct marker *m, u8 *p, size_t size)
   u16 header;
   size_t var_len;
 
-  if (size < 2) 
+  if (size < 2)
     return 0;
 
   header = (p[0] << 8) | p[1];
 
   switch (header) {
-    case 0xffd8: return set_marker(m, MARKER_SOI, 0, size); 
+    case 0xffd8: return set_marker(m, MARKER_SOI, 0, size);
     case 0xffda: return set_marker(m, MARKER_SOS, 0, size);
     case 0xffd9: return set_marker(m, MARKER_EOI, 0, size);
   }
 
-  if (size < 4) 
+  if (size < 4)
     return 0;
 
   var_len = ((p[2] << 8) | p[3]);
@@ -337,7 +337,7 @@ int undelete_jpg_read(int fd,  size_t size)
   } while (buf2_size > 0);
 
   /* Update status bar before the program reached the end of the file */
-  
+
   maybe_update_status_bar(start_time, size-b_left, size, true);
 
   free(buf);
@@ -358,7 +358,7 @@ ssize_t get_file_size(int fd)
       (stat.st_mode & S_IFMT) == S_IFBLK) {
     uint64_t sector_count = 0;
     uint32_t sector_size = 0;
-    
+
     // Query the number of sectors on the disk
     if (ioctl(fd, DKIOCGETBLOCKCOUNT, &sector_count) == -1) {
       warn("Ioctl failed when getting sector_count");

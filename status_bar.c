@@ -24,15 +24,15 @@ static int fill_time(char *buf, struct human_time_span *t)
 static void humanize_time(struct human_time_span *t, long sec)
 {
   t->days = sec / (24 * 3600);
-  sec = sec % (24 * 3600); 
+  sec = sec % (24 * 3600);
 
   t->hours = sec / 3600;
   sec %= 3600;
 
   t->minutes = sec / 60;
-  sec %= 60; 
+  sec %= 60;
 
-  t->seconds = sec; 
+  t->seconds = sec;
 }
 
 static int fill_eta(char *buf, int64_t b_left, int b_per_second)
@@ -44,7 +44,7 @@ static int fill_eta(char *buf, int64_t b_left, int b_per_second)
 
   if (b_per_second == 0 || b_per_second == NO_SPEED)
     return sprintf(buf, "??");
-  
+
   humanize_time(&t, b_left/b_per_second);
   buf += fill_time(buf, &t);
   return buf - start;
@@ -68,7 +68,7 @@ static int fill_human_byte_unit(char *buf, int unit)
 }
 
 static int get_best_human_unit(size_t bytes)
-{   
+{
   if (bytes < ONE_MB)
     return KB_UNIT;
   if (bytes < ONE_GB)
@@ -119,7 +119,7 @@ static int fill_progress_bar(char *buf, int percent)
 
   for (; i < PBAR_LEN-1; i++)
     buf[i] = ' ';
-  
+
   buf[i++] = ']';
   buf[i++] = '\0';
 
@@ -136,7 +136,7 @@ static size_t get_speed(date_usec_t start_time, date_usec_t now_time, int64_t b_
   span_usec_t time_passed = now_time - start_time;
 
   if (time_passed == 0) {
-    return NO_SPEED; 
+    return NO_SPEED;
   }
   return (b_done * USEC_PER_SEC) / time_passed;
 }
@@ -146,17 +146,17 @@ static int get_percent(size_t size, size_t bytes_left)
   return 100 - ((bytes_left * 100) / size);
 }
 
-static void print_status_bar(date_usec_t start_time, date_usec_t now_time, 
+static void print_status_bar(date_usec_t start_time, date_usec_t now_time,
                       size_t b_done, size_t b_total)
 {
   char status_bar[300];
-  char *p = status_bar; 
-  
+  char *p = status_bar;
+
   size_t b_left = b_total - b_done;
 
   int percent = get_percent(b_total, b_left);
   size_t b_per_second = get_speed(start_time, now_time, b_done);
-  
+
   p += fill_percent(p, percent);
   p += sprintf(p, " ");
   p += fill_progress_bar(p, percent);
