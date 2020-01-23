@@ -37,8 +37,6 @@ int main(int argc, char *argv[])
     img_count = undelete_jpg_mmap(fptr, size);
   }
 
-  close(fd);
-
   printf("\n%i images recovered\n", img_count);
 
   return 0;
